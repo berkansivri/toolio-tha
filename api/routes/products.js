@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cache = require('apicache').middleware
+
 const ShopifyService = require('../service/shopify')
 
 /* GET products listing. */

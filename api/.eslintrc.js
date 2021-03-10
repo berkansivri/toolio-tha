@@ -4,8 +4,8 @@ module.exports = {
     commonjs: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'prettier'],
-  plugins: ['prettier'],
+  extends: ['eslint:recommended', 'prettier', 'plugin:jest/recommended'],
+  plugins: ['prettier', 'jest'],
   parserOptions: {
     ecmaVersion: 12,
   },
