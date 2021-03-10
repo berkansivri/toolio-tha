@@ -5,7 +5,7 @@ const ShopifyService = require('../service/shopify');
 /* GET products listing. */
 router.get('/', async (req, res) => {
   try {
-    const products = await ShopifyService.getProducts()
+    const products = await ShopifyService.getProducts(req.query)
     res.send(products);
   } catch ({ response }) {
     res.status(response.status).send(await response.text())
