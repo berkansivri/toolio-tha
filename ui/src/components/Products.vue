@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
+    <v-row class="justify-center">
+      <v-col sm="12" lg="8">
         <v-card>
           <v-card-title>
             Shopify Products
@@ -11,7 +11,6 @@
               append-icon="mdi-magnify"
               label="Search"
               single-line
-              hide-details
               placeholder="Press 'enter' to search"
               @keydown.enter="getProducts"
             />
@@ -19,10 +18,7 @@
           <v-data-table
             :headers="headers"
             :items="products"
-            :options.sync="options"
-            :items-per-page="5"
             :loading="isLoading"
-            :server-items-length="totalProducts"
           />
         </v-card>
       </v-col>
@@ -35,11 +31,9 @@ import productService from "@/service/product";
 
 export default {
   name: "Products",
-
   data: () => ({
     isLoading: false,
-    totalProducts: 5,
-    options: {},
+    error: "fdas",
     products: [],
     headers: [
       {
@@ -47,6 +41,7 @@ export default {
         align: "start",
         sortable: false,
         value: "id",
+        width: "200",
       },
       {
         text: "Title",
@@ -68,14 +63,6 @@ export default {
       this.isLoading = true;
       this.products = await productService.getProducts(this.query);
       this.isLoading = false;
-    },
-  },
-  watch: {
-    options: {
-      handler() {
-        this.getProducts();
-      },
-      deep: true,
     },
   },
 };

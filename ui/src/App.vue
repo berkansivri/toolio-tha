@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+
+<style>
+#app {
+  background-color: gray;
+}
+</style>
