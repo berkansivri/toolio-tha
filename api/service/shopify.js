@@ -10,13 +10,15 @@ module.exports = {
       `${baseUrl}/products.json?` + new URLSearchParams({ fields })
     )
     checkStatus(response)
-    
+
     let { products } = await response.json()
-    
+
     if (title) {
-      products = products.filter(p => p.title.toLowerCase().includes(title.toLowerCase()))
+      products = products.filter((p) =>
+        p.title.toLowerCase().includes(title.toLowerCase())
+      )
     }
 
     return products
-  }
+  },
 }
