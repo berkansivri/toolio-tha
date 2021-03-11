@@ -73,11 +73,13 @@ export default {
   methods: {
     async getProducts() {
       this.isLoading = true;
+
       try {
         this.products = await productService.getProducts(this.query);
       } catch (error) {
         this.error = error.message;
       }
+
       this.isLoading = false;
     },
   },
