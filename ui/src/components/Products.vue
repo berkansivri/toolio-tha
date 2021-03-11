@@ -22,6 +22,18 @@
           />
         </v-card>
       </v-col>
+      <v-snackbar
+        :timeout="3000"
+        :value="!!error"
+        absolute
+        right
+        top
+        color="error"
+        rounded="pill"
+        elevation="20"
+      >
+        <strong>{{ error }}</strong>
+      </v-snackbar>
     </v-row>
   </v-container>
 </template>
@@ -33,7 +45,7 @@ export default {
   name: "Products",
   data: () => ({
     isLoading: false,
-    error: "fdas",
+    error: "",
     products: [],
     headers: [
       {
@@ -61,7 +73,11 @@ export default {
   methods: {
     async getProducts() {
       this.isLoading = true;
-      this.products = await productService.getProducts(this.query);
+      try {
+        this.products = await productService.getProducts(this.query);
+      } catch (error) {
+        this.error = error.message;
+      }
       this.isLoading = false;
     },
   },
