@@ -32,8 +32,10 @@ function searchItemsByFields(items, fields) {
 }
 
 function mapItemsByFields(items, fields) {
-  return items.map((p) =>
-    fields.split(',').reduce((a, c) => ((a[c] = p[c]), a), {})
+  return items.map((item) =>
+    fields
+      .split(',')
+      .reduce((obj, field) => ((obj[field] = item[field]), obj), {})
   )
 }
 

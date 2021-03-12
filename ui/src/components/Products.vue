@@ -7,7 +7,6 @@
             Shopify Products
             <v-spacer />
             <v-text-field
-              :value="query.title"
               append-icon="mdi-magnify"
               label="Search"
               single-line
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import productService from '@/service/product'
+import productService from '@/service/product.js'
 
 export default {
   name: 'Products',
