@@ -11,6 +11,7 @@ STORE_NAME=
 API_VERSION=
 API_KEY=
 API_PASSWORD=
+CACHE_DURATION=   // (minute) default 30 min
 ```
 
 ## Products
@@ -20,13 +21,15 @@ API_PASSWORD=
 | Parameter | Description |
 | --- | ----------- |
 | fields | Describe the returning fields of products |
-| title | Filtering products by *title* field|
+| limit | expected items limit for pagination |
+| page | expected page items for pagination |
+| **{field}** | Search products by *field* value (sample: **title=car**) | 
 
 &nbsp;
 
 #### Sample Request
 
-* localhost:3000/products?**fields**=id,title&**title**=car
+* localhost:3000/products?**fields**=id,title&**title**=car&**limit**=10&**page**=1
 
 ---
 
@@ -71,4 +74,9 @@ yarn build
 ### Lints and fixes files
 ```
 yarn lint
+```
+
+### Run unit tests
+```
+yarn test
 ```

@@ -38,7 +38,7 @@ async function getAllProducts() {
     // continue until there is no next page information in header
   } while (linkHeader.includes('rel="next"'))
 
-  cache.put('products', allProducts, CACHE_DURATION * 60 * 1000)
+  cache.put('products', allProducts, (CACHE_DURATION || 30) * 60 * 1000)
 
   return allProducts
 }
