@@ -5,14 +5,14 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "lint": "eslint --fix --ext .js .",
-    "test": "jest --testTimeout=30000"
+    "test": "jest"
   },
   "dependencies": {
-    "apicache": "^1.6.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "memory-cache": "^0.2.0",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.1"
   },
