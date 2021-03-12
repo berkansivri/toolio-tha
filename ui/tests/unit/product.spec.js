@@ -6,11 +6,14 @@ import { getProducts } from "@/service/product.js";
 jest.mock("@/service/product.js", () => {
   return {
     getProducts: jest.fn(() => {
-      return [
-        { id: 1, title: "test1" },
-        { id: 2, title: "test2" },
-        { id: 3, title: "test3" },
-      ];
+      return {
+        items: [
+          { id: 1, title: "test1" },
+          { id: 2, title: "test2" },
+          { id: 3, title: "test3" },
+        ],
+        count: 3,
+      };
     }),
   };
 });
@@ -35,7 +38,8 @@ describe("Products.vue", () => {
 
     wrapper.vm.$nextTick(() => {
       expect(getProducts).toHaveBeenCalled();
-      expect(wrapper.vm.products).toEqual(getProducts());
+      expect(wrapper.vm.products).toEqual(getProducts().items);
+      expect(wrapper.vm.totalProducts).toEqual(getProducts().count);
 
       done();
     });
@@ -49,9 +53,9 @@ describe("Products.vue", () => {
 
     const searchInput = wrapper.find("input");
     searchInput.setValue("test");
-    expect(wrapper.vm.query.title).toBe("test");
-
     await searchInput.trigger("keydown.enter");
+
+    expect(wrapper.vm.query.title).toBe("test");
     expect(getProducts).toHaveBeenCalledWith(wrapper.vm.query);
   });
 

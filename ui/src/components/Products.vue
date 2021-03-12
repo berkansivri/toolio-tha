@@ -7,18 +7,24 @@
             Shopify Products
             <v-spacer />
             <v-text-field
-              v-model="query.title"
+              :value="query.title"
               append-icon="mdi-magnify"
               label="Search"
               single-line
               placeholder="Press 'enter' to search"
-              @keydown.enter="getProducts"
+              @keydown.enter="query.title = $event.target.value"
             />
           </v-card-title>
           <v-data-table
             :headers="headers"
             :items="products"
             :loading="isLoading"
+            :footer-props="{
+              itemsPerPageOptions,
+            }"
+            :page.sync="query.page"
+            :items-per-page.sync="query.limit"
+            :server-items-length="totalProducts"
           />
         </v-card>
       </v-col>
@@ -47,6 +53,8 @@ export default {
     isLoading: false,
     error: "",
     products: [],
+    itemsPerPageOptions: [10, 20, 30, 40, 50, -1],
+    totalProducts: -1,
     headers: [
       {
         text: "Id",
@@ -65,22 +73,34 @@ export default {
     query: {
       fields: ["id", "title"],
       title: "",
+      limit: 10,
+      page: 1,
     },
   }),
-  created() {
-    this.getProducts();
-  },
   methods: {
     async getProducts() {
+      this.error = "";
       this.isLoading = true;
 
       try {
-        this.products = await productService.getProducts(this.query);
+        const { items, count } = await productService.getProducts(this.query);
+
+        this.products = items;
+        this.totalProducts = count;
       } catch (error) {
         this.error = error.message;
       }
 
       this.isLoading = false;
+    },
+  },
+  watch: {
+    query: {
+      handler() {
+        this.getProducts();
+      },
+      deep: true,
+      immediate: true,
     },
   },
 };
