@@ -45,63 +45,63 @@
 </template>
 
 <script>
-import productService from "@/service/product";
+import productService from '@/service/product'
 
 export default {
-  name: "Products",
+  name: 'Products',
   data: () => ({
     isLoading: false,
-    error: "",
+    error: '',
     products: [],
     itemsPerPageOptions: [10, 20, 30, 40, 50, -1],
     totalProducts: -1,
     headers: [
       {
-        text: "Id",
-        align: "start",
+        text: 'Id',
+        align: 'start',
         sortable: false,
-        value: "id",
-        width: "200",
+        value: 'id',
+        width: '200',
       },
       {
-        text: "Title",
-        align: "start",
+        text: 'Title',
+        align: 'start',
         sortable: false,
-        value: "title",
+        value: 'title',
       },
     ],
     query: {
-      fields: ["id", "title"],
-      title: "",
+      fields: ['id', 'title'],
+      title: '',
       limit: 10,
       page: 1,
     },
   }),
   methods: {
     async getProducts() {
-      this.error = "";
-      this.isLoading = true;
+      this.error = ''
+      this.isLoading = true
 
       try {
-        const { items, count } = await productService.getProducts(this.query);
+        const { items, count } = await productService.getProducts(this.query)
 
-        this.products = items;
-        this.totalProducts = count;
+        this.products = items
+        this.totalProducts = count
       } catch (error) {
-        this.error = error.message;
+        this.error = error.message
       }
 
-      this.isLoading = false;
+      this.isLoading = false
     },
   },
   watch: {
     query: {
       handler() {
-        this.getProducts();
+        this.getProducts()
       },
       deep: true,
       immediate: true,
     },
   },
-};
+}
 </script>
