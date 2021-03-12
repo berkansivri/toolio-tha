@@ -13,13 +13,4 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/count', async (_, res) => {
-  try {
-    const count = await ShopifyService.getProductsCount()
-    res.send(count)
-  } catch (error) {
-    res.sendStatus(error.response.status).send(await error.response.text())
-  }
-})
-
 module.exports = router

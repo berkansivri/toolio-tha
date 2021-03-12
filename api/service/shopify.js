@@ -49,14 +49,6 @@ async function getProducts(query) {
   return applyQueryToItems(products, query)
 }
 
-async function getProductsCount() {
-  const response = await fetch(`${baseUrl}/products/count.json`)
-  checkStatus(response)
-
-  return await response.json()
-}
-
 module.exports = {
   getProducts,
-  getProductsCount,
 }

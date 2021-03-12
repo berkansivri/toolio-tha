@@ -1,8 +1,10 @@
 function applyQueryToItems(items, query) {
   const { fields = '', page = 1, limit, ...filters } = query
+  let count = items.length
 
   if (Object.keys(filters).length > 0) {
     items = searchItemsByFields(items, filters)
+    count = items.length
   }
 
   if (fields) {
@@ -13,7 +15,10 @@ function applyQueryToItems(items, query) {
     items = paginateItems(items, { page, limit })
   }
 
-  return items
+  return {
+    items,
+    count,
+  }
 }
 
 function searchItemsByFields(items, fields) {
