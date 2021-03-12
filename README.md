@@ -11,7 +11,7 @@ STORE_NAME=
 API_VERSION=
 API_KEY=
 API_PASSWORD=
-CACHE_DURATION=   // (minute) default 30 min
+CACHE_DURATION=   // (minute) default 30
 ```
 
 ## Products
