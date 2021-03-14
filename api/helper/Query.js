@@ -1,27 +1,27 @@
 function applyQueryToItems(items, query) {
-  const { fields = '', page = 1, limit, ...filters } = query
-  let count = items.length
-
-  if (Object.keys(filters).length > 0) {
-    items = searchItemsByFields(items, filters)
-    count = items.length
+  if (!Array.isArray(items) || !query || typeof query !== 'object') {
+    throw new Error('Invalid parameters to applyQueryToItems method')
   }
 
-  if (fields) {
-    items = mapItemsByFields(items, fields)
-  }
+  const { fields, page, limit, ...filters } = query
+  let newItems = [...items]
 
-  if (limit) {
-    items = paginateItems(items, { page, limit })
-  }
+  newItems = searchItemsByFields(newItems, filters)
+  const count = newItems.length
+
+  newItems = mapItemsByFields(newItems, fields)
+  newItems = paginateItems(newItems, { page, limit })
 
   return {
-    items,
+    items: newItems,
     count,
   }
 }
 
 function searchItemsByFields(items, fields) {
+  if (!fields || typeof fields !== 'object' || Object.keys(fields).length === 0)
+    return items
+
   const keys = Object.keys(fields)
 
   return items.filter((item) =>
@@ -31,15 +31,19 @@ function searchItemsByFields(items, fields) {
   )
 }
 
-function mapItemsByFields(items, fields) {
+function mapItemsByFields(items, fields = '') {
+  if (!fields || typeof fields !== 'string') return items
+
+  const fieldsArray = fields.split(',')
+
   return items.map((item) =>
-    fields
-      .split(',')
-      .reduce((obj, field) => ((obj[field] = item[field]), obj), {})
+    fieldsArray.reduce((obj, field) => ((obj[field] = item[field]), obj), {})
   )
 }
 
-function paginateItems(items, { page, limit }) {
+function paginateItems(items, { page = 1, limit }) {
+  if (!limit) return items
+
   const startIndex = +limit * (page - 1)
   const endIndex = +limit + startIndex
 

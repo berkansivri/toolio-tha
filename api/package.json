@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "lint": "eslint --fix --ext .js .",
-    "test": "jest"
+    "test": "jest --testTimeout=30000"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
