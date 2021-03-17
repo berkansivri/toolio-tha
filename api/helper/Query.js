@@ -4,9 +4,8 @@ function applyQueryToItems(items, query) {
   }
 
   const { fields, page, limit, ...filters } = query
-  let newItems = [...items]
 
-  newItems = searchItemsByFields(newItems, filters)
+  let newItems = searchItemsByFields(items, filters)
   const count = newItems.length
 
   newItems = mapItemsByFields(newItems, fields)
